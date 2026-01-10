@@ -24,5 +24,3 @@ export const cardsData = [
         description: "-1.3% vs mês anterior"
     },
 ]
-
-export default cardsData;

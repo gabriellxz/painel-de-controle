@@ -7,10 +7,11 @@ import { IoHomeOutline } from "react-icons/io5";
 import { PiUsers } from "react-icons/pi";
 import { CiSettings } from "react-icons/ci";
 import { GoInbox } from "react-icons/go";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 function App() {
 
+  const location = useLocation();
   const [open, setOpen] = useState(false);
 
   function stringToColor(string: string) {
@@ -59,15 +60,19 @@ function App() {
       </header>
       <div className="flex">
         <aside className={`bg-white h-[calc(100vh-88px)] transition-all duration-300 select-none ${open ? 'w-50 p-5' : 'w-16 p-2'}`}>
-          <ul className={`flex flex-col gap-6 mt-10 ${open ? 'items-start' : 'items-center'}`}>
-            <li className="flex items-center">
-              <IoHomeOutline className="inline text-2xl" />
-              {open && <span className="ml-2">Dashboard</span>}
-            </li>
-            <li className="flex items-center">
-              <GoInbox className="inline text-2xl" />
-              {open && <span className="ml-2">Estoque</span>}
-            </li>
+          <ul className={`flex flex-col gap-3 mt-10 ${open ? 'items-start' : 'items-center'}`}>
+            <Link to="/" className={`w-full p-3 rounded-md ${location.pathname === "/" ? "bg-[#ecfeff] text-[#0891b2]" : ""}`}>
+              <li className="flex items-center">
+                <IoHomeOutline className="inline text-2xl" />
+                {open && <span className="ml-2">Dashboard</span>}
+              </li>
+            </Link>
+            <Link to="/estoque" className={`w-full p-3 rounded-md ${location.pathname === "/estoque" ? "bg-[#ecfeff] text-[#0891b2]" : ""}`}>
+              <li className="flex items-center">
+                <GoInbox className="inline text-2xl" />
+                {open && <span className="ml-2">Estoque</span>}
+              </li>
+            </Link>
             <li className="flex items-center">
               <PiUsers className="inline text-2xl" />
               {open && <span className="ml-2">Usuários</span>}

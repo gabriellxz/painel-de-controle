@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import CardDashboard from "../../components/CardDashboard/CardDashboard"
-import cardsData from "../../mock/cardsData"
+import { cardsData } from "../../mock/cardsData"
 import { Chart, registerables } from "chart.js";
 
 export default function Dashboard() {
@@ -114,13 +114,13 @@ export default function Dashboard() {
                     <div className="bg-white p-5 rounded-md border border-zinc-300 mb-4 w-full">
                         <h1 className="text-2xl font-light">Rendimento Mensal</h1>
                         <div className="w-full h-[50vh]">
-                            <canvas ref={lineRef} className="w-full"/>
+                            <canvas ref={lineRef} className="w-full" />
                         </div>
                     </div>
                     <div className="bg-white p-5 rounded-md border border-zinc-300 mb-4 w-full">
                         <h1 className="text-2xl font-light">Distribuição</h1>
                         <div className="w-full h-[50vh] flex items-center justify-center">
-                            <canvas ref={doughRef} className="w-full"/>
+                            <canvas ref={doughRef} className="w-full" />
                         </div>
                     </div>
                 </div>
