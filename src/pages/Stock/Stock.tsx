@@ -106,62 +106,67 @@ export default function Stock() {
             </div>
 
             <div className="mt-7">
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead sx={{ backgroundColor: '#ecfeff' }}>
-                            <TableRow>
-                                <TableCell>Código</TableCell>
-                                <TableCell align="center">Nome do produto</TableCell>
-                                <TableCell align="center">Categoria</TableCell>
-                                <TableCell align="center">Quantidade em estoque</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {
-                                paginatedProducts.map(p => (
-                                    <TableRow
-                                        key={p.id}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {p.codigo}
-                                        </TableCell>
-                                        <TableCell align="center">{p.nome}</TableCell>
-                                        <TableCell align="center">{p.categoria}</TableCell>
-                                        <TableCell align="center">{p.quantidadeEstoque}</TableCell>
-                                    </TableRow>
-                                ))
-                            }
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 53 * emptyRows }}>
-                                    <TableCell colSpan={4} />
+                <div className="bg-white p-3 rounded-md">
+                    <div>
+                        <h2 className="text-2xl font-light mb-4">Produtos em estoque</h2>
+                    </div>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead sx={{ backgroundColor: '#ecfeff' }}>
+                                <TableRow>
+                                    <TableCell>Código</TableCell>
+                                    <TableCell align="center">Nome do produto</TableCell>
+                                    <TableCell align="center">Categoria</TableCell>
+                                    <TableCell align="center">Quantidade em estoque</TableCell>
                                 </TableRow>
-                            )}
-                        </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                    colSpan={4}
-                                    count={productsData.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    slotProps={{
-                                        select: {
-                                            inputProps: {
-                                                'aria-label': 'rows per page',
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    paginatedProducts.map(p => (
+                                        <TableRow
+                                            key={p.id}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                                {p.codigo}
+                                            </TableCell>
+                                            <TableCell align="center">{p.nome}</TableCell>
+                                            <TableCell align="center">{p.categoria}</TableCell>
+                                            <TableCell align="center">{p.quantidadeEstoque}</TableCell>
+                                        </TableRow>
+                                    ))
+                                }
+                                {emptyRows > 0 && (
+                                    <TableRow style={{ height: 53 * emptyRows }}>
+                                        <TableCell colSpan={4} />
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                        colSpan={4}
+                                        count={productsData.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        slotProps={{
+                                            select: {
+                                                inputProps: {
+                                                    'aria-label': 'rows per page',
+                                                },
+                                                native: true,
                                             },
-                                            native: true,
-                                        },
-                                    }}
-                                    onPageChange={handleChangePage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                    ActionsComponent={TablePaginationActions}
-                                />
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
-                </TableContainer>
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </TableContainer>
+                </div>
             </div>
         </div>
     )
