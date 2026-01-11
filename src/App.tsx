@@ -75,7 +75,7 @@ function App() {
                 {open && <span className="ml-2">Dashboard</span>}
               </li>
             </Link>
-            <Link to="/estoque" className={`w-full p-3 rounded-md dark:${location.pathname === "/estoque" ? "bg-gray-700 text-blue-400" : ""}`}>
+            <Link to="/estoque" className={`w-full p-3 rounded-md dark:${location.pathname === "/estoque" || location.pathname === "/categorias" ? "bg-gray-700 text-blue-400" : ""}`}>
               <li className="flex items-center">
                 <GoInbox className="inline text-2xl" />
                 {open && <span className="ml-2">Estoque</span>}

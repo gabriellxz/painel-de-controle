@@ -1,13 +1,10 @@
-import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { productsData } from "../../mock/productsData";
-import { LastPageOutlined, FirstPage, KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
-import { IoMdAdd } from "react-icons/io";
-import { TbCategoryPlus } from "react-icons/tb";
+import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPageOutlined } from "@mui/icons-material";
+import { Box, Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, useTheme } from "@mui/material";
 import { useState } from "react";
-import ModalProduct from "./ModalProduct/ModalProduct";
-import { Link } from "react-router-dom";
-import { categoryData } from "../../mock/categoryData";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { categoryData } from "../../../mock/categoryData";
+import { IoMdAdd } from "react-icons/io";
+import ModalProduct from "../ModalProduct/ModalProduct";
 
 interface TablePaginationActionsProps {
     count: number;
@@ -75,7 +72,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     );
 }
 
-export default function Stock() {
+export default function Categories() {
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -99,42 +96,43 @@ export default function Stock() {
 
     // Calculate paginated data
     const startIndex = page * rowsPerPage;
-    const endIndex = rowsPerPage > 0 ? startIndex + rowsPerPage : productsData.length;
-    const paginatedProducts = productsData.slice(startIndex, endIndex);
-    const emptyRows = rowsPerPage > 0 ? Math.max(0, (1 + page) * rowsPerPage - productsData.length) : 0;
+    const endIndex = rowsPerPage > 0 ? startIndex + rowsPerPage : categoryData.length;
+    const paginatedProducts = categoryData.slice(startIndex, endIndex);
+    const emptyRows = rowsPerPage > 0 ? Math.max(0, (1 + page) * rowsPerPage - categoryData.length) : 0;
 
     return (
         <div>
             <div className="font-light">
-                <h1 className="text-3xl">Gerenciamento de estoque</h1>
+                <button className="flex items-center cursor-pointer" onClick={() => window.history.back()}>
+                    <IoChevronBackOutline />
+                    Voltar
+                </button>
+                <h1 className="text-3xl">Gerenciamento de categorias</h1>
                 <p className="text-zinc-500">
-                    Liste e gerencie seus produtos
+                    Liste e gerencie suas categorias
                 </p>
             </div>
 
             <div className="mt-7">
                 <div className="p-3 rounded-md">
+
                     <div className="flex justify-between ">
                         <h2 className="text-2xl font-light mb-4 dark:text-white">Produtos em estoque</h2>
                         <div className="flex items-center gap-2">
                             <Button onClick={() => setOpenModal(true)} color="primary" sx={{ marginBottom: '16px', backgroundColor: '#374151' }}>
                                 <IoMdAdd />
                             </Button>
-                            <Link to="/categorias">
-                                <Button color="primary" sx={{ marginBottom: '16px', backgroundColor: '#374151' }}>
-                                    <TbCategoryPlus />
-                                </Button>
-                            </Link>
                         </div>
                     </div>
+
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead sx={{ backgroundColor: '#000' }}>
                                 <TableRow>
                                     <TableCell>Código</TableCell>
-                                    <TableCell align="center">Nome do produto</TableCell>
-                                    <TableCell align="center">Categoria</TableCell>
-                                    <TableCell align="center">Quantidade em estoque</TableCell>
+                                    <TableCell align="center">Nome da categoria</TableCell>
+                                    <TableCell align="center">Quantidade de produtos</TableCell>
+                                    <TableCell align="center">Descrição</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -145,11 +143,11 @@ export default function Stock() {
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
-                                                {p.codigo}
+                                                {p.id}
                                             </TableCell>
                                             <TableCell align="center">{p.nome}</TableCell>
-                                            <TableCell align="center">{p.categoria}</TableCell>
-                                            <TableCell align="center">{p.quantidadeEstoque}</TableCell>
+                                            <TableCell align="center">{p.quantidadeProdutos}</TableCell>
+                                            <TableCell align="center">{p.descricao}</TableCell>
                                         </TableRow>
                                     ))
                                 }
@@ -164,7 +162,7 @@ export default function Stock() {
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                                         colSpan={4}
-                                        count={productsData.length}
+                                        count={categoryData.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         slotProps={{
@@ -185,39 +183,23 @@ export default function Stock() {
                     </TableContainer>
                 </div>
             </div>
-
             <ModalProduct
                 open={openModal}
                 onClose={() => setOpenModal(false)}
-                title="Novo produto"
+                title="Nova categoria"
             >
                 <form className="w-full mt-5 flex flex-col gap-4">
                     <div className="flex gap-2">
-                        <TextField label="Código do produto" variant="outlined" type="number" sx={{ width: "100%" }} />
-                        <TextField label="Nome do produto" variant="outlined" type="text" sx={{ width: "100%" }} />
+                        <TextField label="Nome da categoria" variant="outlined" type="text" sx={{ width: "100%" }} />
                     </div>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Categorias</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Categorias"
-                        >
-                            {
-                                categoryData.map(c => (
-                                    <MenuItem key={c.id} value={c.nome}>{c.nome}</MenuItem>
-                                ))
-                            }
-                        </Select>
-                    </FormControl>
                     <div>
-                        <TextField label="Quantidade em estoque" variant="outlined" type="number" sx={{ width: "100%" }} />
+                        <TextField label="Descrição da categoria" variant="outlined" type="text" sx={{ width: "100%" }} />
                     </div>
                     <Button variant="contained" sx={{ backgroundColor: '#000', color: '#5bb1b6' }}>
-                        Adicionar Produto
+                        Adicionar Categoria
                     </Button>
                 </form>
             </ModalProduct>
         </div>
-    )
+    ) 
 }
