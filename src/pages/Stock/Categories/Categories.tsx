@@ -117,7 +117,7 @@ export default function Categories() {
                 <div className="p-3 rounded-md">
 
                     <div className="flex justify-between ">
-                        <h2 className="text-2xl font-light mb-4 dark:text-white">Produtos em estoque</h2>
+                        <h2 className="text-2xl font-light mb-4 dark:text-white">Categorias</h2>
                         <div className="flex items-center gap-2">
                             <Button onClick={() => setOpenModal(true)} color="primary" sx={{ marginBottom: '16px', backgroundColor: '#374151' }}>
                                 <IoMdAdd />
