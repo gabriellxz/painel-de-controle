@@ -25,8 +25,8 @@ export default function Dashboard() {
                         datasets: [{
                             label: 'Rendimento Mensal',
                             data: [0, 2500, 5000, 7500, 1000, 12500, 15000],
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59,130,246,0.2)',
+                            borderColor: '#60a5fa',
+                            backgroundColor: 'rgba(96,165,250,0.2)',
                             tension: 0.4,
                             fill: true,
                         }]
@@ -47,9 +47,9 @@ export default function Dashboard() {
                                 label: "Distribuição",
                                 data: [300, 50, 100],
                                 backgroundColor: [
-                                    'rgb(255, 99, 133)',
-                                    'rgb(54, 163, 235)',
-                                    'rgb(255, 207, 86)',
+                                    'rgb(239, 68, 68)',
+                                    'rgb(59, 130, 246)',
+                                    'rgb(245, 158, 11)',
                                 ],
                             }]
                         },
@@ -69,8 +69,8 @@ export default function Dashboard() {
                             datasets: [{
                                 data: [65, 59, 80, 81, 56, 55],
                                 backgroundColor: [
-                                    "rgb(6, 182, 212)",
-                                    "rgb(207, 250, 254)"
+                                    "rgb(14, 165, 233)",
+                                    "rgb(56, 189, 248)"
                                 ]
                             }]
                         },
@@ -92,8 +92,8 @@ export default function Dashboard() {
     return (
         <div>
             <div className="font-light">
-                <h1 className="text-3xl">Bem-vindo, Gabriel Silva</h1>
-                <p className="text-zinc-500">
+                <h1 className="text-3xl dark:text-white">Bem-vindo, Gabriel Silva</h1>
+                <p className="dark:text-gray-400">
                     Aqui está um resumo da sua performance
                 </p>
             </div>
@@ -111,22 +111,22 @@ export default function Dashboard() {
             </div>
             <div className="w-full">
                 <div className="lg:flex w-full gap-5">
-                    <div className="bg-white p-5 rounded-md border border-zinc-300 mb-4 w-full">
-                        <h1 className="text-2xl font-light">Rendimento Mensal</h1>
+                    <div className="bg-[#23262b] p-5 rounded-md dark:border-gray-700 mb-4 w-full">
+                        <h1 className="text-2xl font-light dark:text-white">Rendimento Mensal</h1>
                         <div className="w-full h-[50vh]">
                             <canvas ref={lineRef} className="w-full" />
                         </div>
                     </div>
-                    <div className="bg-white p-5 rounded-md border border-zinc-300 mb-4 w-full">
-                        <h1 className="text-2xl font-light">Distribuição</h1>
+                    <div className="bg-[#23262b] p-5 rounded-md dark:border-gray-700 mb-4 w-full">
+                        <h1 className="text-2xl font-light dark:text-white">Distribuição</h1>
                         <div className="w-full h-[50vh] flex items-center justify-center">
                             <canvas ref={doughRef} className="w-full" />
                         </div>
                     </div>
                 </div>
                 <div>
-                    <div className="bg-white p-5 rounded-md border border-zinc-300 mb-4 w-full">
-                        <h1 className="text-2xl font-light">Corporativo mensal</h1>
+                    <div className="bg-[#23262b] p-5 rounded-md dark:border-gray-700 mb-4 w-full">
+                        <h1 className="text-2xl font-light dark:text-white">Corporativo mensal</h1>
                         <div className="w-full h-[50vh]">
                             <canvas ref={barRef} />
                         </div>

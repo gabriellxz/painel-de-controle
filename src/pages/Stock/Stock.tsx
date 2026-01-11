@@ -1,8 +1,10 @@
-import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Box, Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { productsData } from "../../mock/productsData";
 import { LastPageOutlined, FirstPage, KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
+import { IoMdAdd } from "react-icons/io";
 import { useState } from "react";
+import ModalProduct from "./ModalProduct/ModalProduct";
 
 interface TablePaginationActionsProps {
     count: number;
@@ -72,6 +74,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 export default function Stock() {
 
+    const [openModal, setOpenModal] = useState(false);
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -106,13 +110,16 @@ export default function Stock() {
             </div>
 
             <div className="mt-7">
-                <div className="bg-white p-3 rounded-md">
-                    <div>
-                        <h2 className="text-2xl font-light mb-4">Produtos em estoque</h2>
+                <div className="p-3 rounded-md">
+                    <div className="flex justify-between ">
+                        <h2 className="text-2xl font-light mb-4 dark:text-white">Produtos em estoque</h2>
+                        <Button onClick={() => setOpenModal(true)} color="primary" sx={{marginBottom: '16px', backgroundColor: '#374151'}}>
+                            <IoMdAdd/>
+                        </Button>
                     </div>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead sx={{ backgroundColor: '#ecfeff' }}>
+                            <TableHead sx={{ backgroundColor: '#000' }}>
                                 <TableRow>
                                     <TableCell>Código</TableCell>
                                     <TableCell align="center">Nome do produto</TableCell>
@@ -168,6 +175,11 @@ export default function Stock() {
                     </TableContainer>
                 </div>
             </div>
+
+            <ModalProduct
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+            />
         </div>
     )
 }

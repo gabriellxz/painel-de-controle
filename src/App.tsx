@@ -8,6 +8,13 @@ import { PiUsers } from "react-icons/pi";
 import { CiSettings } from "react-icons/ci";
 import { GoInbox } from "react-icons/go";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
 
@@ -42,11 +49,12 @@ function App() {
   }
 
   return (
-    <>
-      <header>
-        <div className="bg-white p-5 flex justify-between items-center">
+    <ThemeProvider theme={theme}>
+      <>
+        <header>
+        <div className="bg-[#000401] text-white p-5 flex justify-between items-center">
           <div className="flex gap-3 items-center">
-            <AiOutlineDashboard className="text-5xl text-blue-600" />
+            <AiOutlineDashboard className="text-5xl" />
             <Divider orientation="vertical" flexItem />
             {
               open ? <IoMdClose className="text-3xl cursor-pointer" onClick={() => setOpen(!open)} /> :
@@ -59,15 +67,15 @@ function App() {
         </div>
       </header>
       <div className="flex">
-        <aside className={`bg-white h-[calc(100vh-88px)] transition-all duration-300 select-none ${open ? 'w-50 p-5' : 'w-16 p-2'}`}>
+        <aside className={`bg-[#000401] text-white h-[calc(100vh-88px)] transition-all duration-300 select-none ${open ? 'w-50 p-5' : 'w-16 p-2'}`}>
           <ul className={`flex flex-col gap-3 mt-10 ${open ? 'items-start' : 'items-center'}`}>
-            <Link to="/" className={`w-full p-3 rounded-md ${location.pathname === "/" ? "bg-[#ecfeff] text-[#0891b2]" : ""}`}>
+            <Link to="/" className={`w-full p-3 rounded-md dark:${location.pathname === "/" ? "bg-gray-700 text-blue-400" : ""}`}>
               <li className="flex items-center">
                 <IoHomeOutline className="inline text-2xl" />
                 {open && <span className="ml-2">Dashboard</span>}
               </li>
             </Link>
-            <Link to="/estoque" className={`w-full p-3 rounded-md ${location.pathname === "/estoque" ? "bg-[#ecfeff] text-[#0891b2]" : ""}`}>
+            <Link to="/estoque" className={`w-full p-3 rounded-md dark:${location.pathname === "/estoque" ? "bg-gray-700 text-blue-400" : ""}`}>
               <li className="flex items-center">
                 <GoInbox className="inline text-2xl" />
                 {open && <span className="ml-2">Estoque</span>}
@@ -88,6 +96,7 @@ function App() {
         </main>
       </div>
     </>
+    </ThemeProvider>
   )
 }
 
