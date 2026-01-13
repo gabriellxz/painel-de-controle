@@ -82,10 +82,12 @@ function App() {
                   {open && <span className="ml-2">Estoque</span>}
                 </li>
               </Link>
-              <li className="flex items-center">
-                <PiUsers className="inline text-2xl" />
-                {open && <span className="ml-2">Usuários</span>}
-              </li>
+              <Link to="/usuários" className={`w-full p-3 rounded-md dark:${location.pathname === "/usuários" ? "bg-gray-700 text-blue-400" : ""}`}>
+                <li className="flex items-center">
+                  <PiUsers className="inline text-2xl" />
+                  {open && <span className="ml-2">Usuários</span>}
+                </li>
+              </Link>
               <li className="flex items-center">
                 <CiSettings className="inline text-2xl" />
                 {open && <span className="ml-2">Configurações</span>}

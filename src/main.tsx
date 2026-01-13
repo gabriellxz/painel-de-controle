@@ -8,6 +8,7 @@ import Stock from './pages/Stock/Stock.tsx'
 import Categories from './pages/Stock/Categories/Categories.tsx'
 import Login from './pages/Login/Login.tsx'
 import Register from './pages/Register/Register.tsx'
+import Users from './pages/Users/Users.tsx'
 
 const router = createBrowserRouter([
 
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "estoque", element: <Stock /> },
-      { path: "categorias", element: <Categories /> }
+      { path: "categorias", element: <Categories /> },
+      { path: "usuários", element: <Users /> }
     ],
   },
   { path: "signIn", element: <Login /> },
