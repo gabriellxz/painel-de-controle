@@ -19,6 +19,7 @@ interface Props {
     onClose: () => void;
     title: string;
     children: React.ReactNode;
+    isEditing: boolean;
 }
 
 export default function ModalProduct(props: Props) {

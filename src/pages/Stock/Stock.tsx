@@ -8,6 +8,10 @@ import { useState } from "react";
 import ModalProduct from "./ModalProduct/ModalProduct";
 import { Link } from "react-router-dom";
 import { categoryData } from "../../mock/categoryData";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+import type { Product } from "../../Models/Products";
+import ModalNotice from "../../components/ModalNotice/ModalNotice";
 
 interface TablePaginationActionsProps {
     count: number;
@@ -78,6 +82,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export default function Stock() {
 
     const [openModal, setOpenModal] = useState(false);
+    const [openModalNotice, setOpenModalNotice] = useState(false);
+
+    const [dataEdit, setDataEdit] = useState<Product>({} as Product);
+    const [isEditing, setIsEditing] = useState(false);
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -102,6 +110,20 @@ export default function Stock() {
     const endIndex = rowsPerPage > 0 ? startIndex + rowsPerPage : productsData.length;
     const paginatedProducts = productsData.slice(startIndex, endIndex);
     const emptyRows = rowsPerPage > 0 ? Math.max(0, (1 + page) * rowsPerPage - productsData.length) : 0;
+
+
+    const openModalEdit = (data: any) => {
+        if (data) {
+            setDataEdit(data);
+            setOpenModal(true);
+            setIsEditing(true);
+        }
+    };
+
+    const removeProduct = (id: number) => {
+        productsData.find((p:Product) => p.id !== id);
+        setOpenModalNotice(false);
+    }
 
     return (
         <div>
@@ -135,11 +157,12 @@ export default function Stock() {
                                     <TableCell align="center">Nome do produto</TableCell>
                                     <TableCell align="center">Categoria</TableCell>
                                     <TableCell align="center">Quantidade em estoque</TableCell>
+                                    <TableCell align="center">Ações</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {
-                                    paginatedProducts.map(p => (
+                                    paginatedProducts.map((p: Product) => (
                                         <TableRow
                                             key={p.id}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -150,6 +173,10 @@ export default function Stock() {
                                             <TableCell align="center">{p.nome}</TableCell>
                                             <TableCell align="center">{p.categoria}</TableCell>
                                             <TableCell align="center">{p.quantidadeEstoque}</TableCell>
+                                            <TableCell align="center" sx={{ display: "flex", justifyContent: "center" }}>
+                                                <FaRegEdit className="text-2xl cursor-pointer" onClick={() => openModalEdit(p)}/>
+                                                <MdDeleteOutline className="text-2xl cursor-pointer" onClick={() => setOpenModalNotice(true)}/>
+                                            </TableCell>
                                         </TableRow>
                                     ))
                                 }
@@ -188,13 +215,18 @@ export default function Stock() {
 
             <ModalProduct
                 open={openModal}
-                onClose={() => setOpenModal(false)}
-                title="Novo produto"
+                onClose={() => {
+                    setOpenModal(false);
+                    setIsEditing(false);
+                    setDataEdit({} as Product);
+                }}
+                title={isEditing == true ? "Editar Produto" : "Adicionar Produto"}
+                isEditing={isEditing}
             >
                 <form className="w-full mt-5 flex flex-col gap-4">
                     <div className="flex gap-2">
-                        <TextField label="Código do produto" variant="outlined" type="number" sx={{ width: "100%" }} />
-                        <TextField label="Nome do produto" variant="outlined" type="text" sx={{ width: "100%" }} />
+                        <TextField label="Código do produto" variant="outlined" type="text" sx={{ width: "100%" }} value={isEditing == true ? dataEdit.codigo : ""}/>
+                        <TextField label="Nome do produto" variant="outlined" type="text" sx={{ width: "100%" }} value={isEditing == true ? dataEdit.nome : ""} />
                     </div>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Categorias</InputLabel>
@@ -202,6 +234,7 @@ export default function Stock() {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             label="Categorias"
+                            value={isEditing == true ? dataEdit.categoria : ""}
                         >
                             {
                                 categoryData.map(c => (
@@ -211,13 +244,26 @@ export default function Stock() {
                         </Select>
                     </FormControl>
                     <div>
-                        <TextField label="Quantidade em estoque" variant="outlined" type="number" sx={{ width: "100%" }} />
+                        <TextField label="Quantidade em estoque" variant="outlined" type="number" sx={{ width: "100%" }} value={isEditing == true ? dataEdit.quantidadeEstoque : ""} />
                     </div>
                     <Button variant="contained" sx={{ backgroundColor: '#000', color: '#5bb1b6' }}>
                         Adicionar Produto
                     </Button>
                 </form>
             </ModalProduct>
+
+            <ModalNotice
+                open={openModalNotice}
+                onClose={() => setOpenModalNotice(false)}
+            >
+                <div className="text-center mb-5 text-xl">
+                    <p>Tem certeza de quer deletar esse produto do estoque?</p>
+                </div>
+                <div className="flex justify-center">
+                    <Button>Cancelar</Button>
+                    <Button onClick={() => removeProduct(dataEdit.id)}>Deletar</Button>
+                </div>
+            </ModalNotice>
         </div>
     )
 }
